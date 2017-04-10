@@ -6,9 +6,15 @@
 # http://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
+from scrapy.item import Field
 
 
 class ComicsItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+    name = Field()
+    author = Field()
+    update_time = Field()
+    last_update = Field()
+    classification = Field()
+    introduction = Field()

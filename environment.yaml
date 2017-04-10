@@ -1,0 +1,21 @@
+name: py2
+channels:
+- defaults
+dependencies:
+- mkl=2017.0.1=0
+- numpy=1.12.1=py27_0
+- pandas=0.19.2=np112py27_1
+- phantomjs=2.1.1=0
+- pip=9.0.1=py27_1
+- python=2.7.13=0
+- python-dateutil=2.6.0=py27_0
+- pytz=2017.2=py27_0
+- setuptools=27.2.0=py27_1
+- six=1.10.0=py27_0
+- vs2008_runtime=9.00.30729.5054=0
+- wheel=0.29.0=py27_0
+- pip:
+  - pymysql==0.7.11
+  - selenium==3.3.3
+prefix: F:\CONDA\envs\py2
+
