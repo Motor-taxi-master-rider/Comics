@@ -8,7 +8,16 @@
 from scrapy import log
 from twisted.enterprise import adbapi
 from scrapy.http import Request
+from config import db_config
+
+import pymysql
+
 
 class ComicsPipeline(object):
+    def __init__(self):
+        self.conn = pymysql.connect(**db_config)
+
     def process_item(self, item, spider):
+        for i in item:
+            print(i)
         return item

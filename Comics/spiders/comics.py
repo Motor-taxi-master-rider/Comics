@@ -2,18 +2,18 @@
 import sys
 sys.path.append('..\..\Comics')
 from scrapy.selector import Selector
-from scrapy.linkextractors import LinkExtractor
-from bs4 import BeautifulSoup
+from scrapy.contrib.spiders import CrawlSpider,Rule
+from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from Comics.items import ComicsItem
 
 
-class Comics(scrapy.Spider):
+class Comics(CrawlSpider):
 
     name = "comics"
     allowed_domains = ["www.tazhe.com"]
     start_urls = ["http://www.tazhe.com/mh/"]
     rules = [
-        Rule(LinkExtractor(allow=(r'http://http://www.tazhe.com/mh/\d+')),
+        Rule(SgmlLinkExtractor(allow=(r'http://http://www.tazhe.com/mh/\d+')),
              callback="parse_item"),
     ]
     def parse_item(self, response):
