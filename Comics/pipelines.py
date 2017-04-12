@@ -15,7 +15,9 @@ import pymysql
 
 class ComicsPipeline(object):
     def __init__(self):
-        self.conn = pymysql.connect(**db_config)
+        super(ComicsPipeline, self)
+        #self.conn = pymysql.connect(**db_config)
+        pass
 
     def process_item(self, item, spider):
         for i in item:

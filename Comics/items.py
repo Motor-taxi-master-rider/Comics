@@ -18,3 +18,4 @@ class ComicsItem(scrapy.Item):
     last_update = Field()
     classification = Field()
     introduction = Field()
+    url = Field()
