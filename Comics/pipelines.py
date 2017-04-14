@@ -11,7 +11,7 @@ from scrapy import log
 from scrapy import signals
 from scrapy.http import Request
 from scrapy.exceptions import DropItem
-from scrapy.contrib.exporter import JsonLinesItemExporter
+from exporter import ComicsExporter
 
 from config import db_config
 
@@ -43,7 +43,7 @@ class ComicsPipeline(object):
 
         print('Writing %s_output.json' % spider.name)
         self.files[spider] = file
-        self.exporter = JsonLinesItemExporter(file, encoding='utf-8')
+        self.exporter = ComicsExporter(file, encoding='utf-8')
         self.exporter.start_exporting()
 
     def spider_closed(self, spider):

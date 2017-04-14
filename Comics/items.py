@@ -9,20 +9,13 @@ import scrapy
 from scrapy.item import Field
 
 
-def unicode_serializer(value):
-    if value:
-        return [item.encode('utf-8').strip() for item in value]
-    else:
-        return None
-
-
 class ComicsItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    name = Field(serializer=unicode_serializer)
-    author = Field(serializer=unicode_serializer)
-    update_time = Field(serializer=unicode_serializer)
-    last_update = Field(serializer=unicode_serializer)
-    classification = Field(serializer=unicode_serializer)
-    introduction = Field(serializer=unicode_serializer)
+    name = Field()
+    author = Field()
+    update_time = Field()
+    last_update = Field()
+    classification = Field()
+    introduction = Field()
     url = Field()
