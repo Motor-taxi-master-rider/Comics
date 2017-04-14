@@ -11,7 +11,7 @@ from scrapy.item import Field
 
 def unicode_serializer(value):
     if value:
-        return [item.encode('gbk') for item in value]
+        return [item.encode('utf-8').strip() for item in value]
     else:
         return None
 

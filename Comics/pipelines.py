@@ -43,7 +43,7 @@ class ComicsPipeline(object):
 
         print('Writing %s_output.json' % spider.name)
         self.files[spider] = file
-        self.exporter = JsonLinesItemExporter(file, encoding='gbk')
+        self.exporter = JsonLinesItemExporter(file, encoding='utf-8')
         self.exporter.start_exporting()
 
     def spider_closed(self, spider):
