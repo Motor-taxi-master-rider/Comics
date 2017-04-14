@@ -16,7 +16,12 @@ class Comics(CrawlSpider):
              callback="parse_item"),
     ]
 
+    def __init__(self, *args, **kwargs):
+        super(Comics, self).__init__(*args, **kwargs)
+
     def parse_item(self, response):
+        #from scrapy.shell import inspect_response
+        #inspect_response(response, self)
         sel = response.selector
         item = ComicsItem()
         item['name'] = sel.xpath(
