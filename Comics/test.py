@@ -1,5 +1,6 @@
-a = u'\u4e0b\u795e\u6728\u308b\u3053'.encode("unicode")
+import pandas as pd
 
-print(type(a))
-print(a.__str__)
-print(a.decode('utf-8'))
+
+df=pd.read_json(path_or_buf ='comics_output.json',encoding='utf-8')
+
+print(df)

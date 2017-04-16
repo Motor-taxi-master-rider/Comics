@@ -35,7 +35,7 @@ ROBOTSTXT_OBEY = True
 # Disable cookies (enabled by default)
 COOKIES_ENABLED = True
 
-DOWNLOAD_DELAY = 1
+DOWNLOAD_DELAY = 0.1
 RANDOMIZE_DOWNLOAD_DELAY = True
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
