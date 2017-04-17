@@ -39,24 +39,22 @@ def main(*script):
         except (TypeError, ValueError):
             pass
         return False
-    try:
-        if script[1]:
-            pass
-    except Exception:
+    if(len(script) > 1):
+        if script[1] == '-s':
+            run_sracpy()
+        elif script[1] == '-v':
+            print(read_df())
+        elif is_number(script[1]):
+            df = read_df()
+            cds = Comic_dragger_starter(df.ix[int(script[1])]['url'])
+            cds.start_dragger()
+        else:
+            print('unknow command')
+    else:
         print('Help:')
         print('-v   view data source')
         print('-s   re scrapy data')
         print('-[number]   retrive item of index')
-    if script[1] == '-s':
-        run_sracpy()
-    elif script[1] == '-v':
-        print(read_df())
-    elif is_number(script[1]):
-        df = read_df()
-        cds = Comic_dragger_starter(df.ix[int(script[1])]['url'])
-        cds.start_dragger()
-    else:
-        print('unknow command')
 
 
 if __name__ == '__main__':
