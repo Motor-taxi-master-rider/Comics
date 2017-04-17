@@ -1,8 +1,8 @@
 # coding:utf-8
 import sys
 sys.path.append('..\..\Comics')
-from scrapy.contrib.spiders import CrawlSpider, Rule
-from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
+from scrapy.spiders import CrawlSpider, Rule
+from scrapy.linkextractors.lxmlhtml import LxmlLinkExtractor
 from Comics.items import ComicsItem
 
 
@@ -12,7 +12,7 @@ class Comics(CrawlSpider):
     allowed_domains = ["www.tazhe.com"]
     start_urls = ["http://www.tazhe.com/mh/"]
     rules = [
-        Rule(SgmlLinkExtractor(allow=(r'http://www.tazhe.com/mh/\d+')),
+        Rule(LxmlLinkExtractor(allow=(r'http://www.tazhe.com/mh/\d+')),
              callback="parse_item"),
     ]
 

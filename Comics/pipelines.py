@@ -4,14 +4,11 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
-from scrapy import log
 from scrapy import signals
 from scrapy.http import Request
 from scrapy.exceptions import DropItem
 from exporter import ComicsExporter
+from exceptions import IOError
 
 from config import db_config
 
@@ -21,7 +18,7 @@ import pymysql
 class ComicsPipeline(object):
     def __init__(self):
         super(ComicsPipeline, self)
-        self.conn = pymysql.connect(**db_config)
+        #self.conn = pymysql.connect(**db_config)
         self.already_seen = set()
         self.files = {}
 
@@ -36,9 +33,9 @@ class ComicsPipeline(object):
 
     def spider_opened(self, spider):
         try:
-            file = open('%s_output.json' % spider.name,
-                        mode='w+b')
-        except err:
+            file = open('%s_output.csv' % spider.name,
+                        mode='w+')
+        except IOError:
             print('==========OPEN FILE ERROR==========')
 
         print('Writing %s_output.json' % spider.name)

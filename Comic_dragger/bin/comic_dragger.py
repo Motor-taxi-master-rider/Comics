@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 import logging
+import re
 import os
 from os import path as osp
 import urllib2
@@ -16,15 +17,14 @@ class comic_dragger:
         self.__chapter_list = []
         self.__browser = webdriver.PhantomJS()
 
-
         self.__browser = webdriver.PhantomJS()
         self.__get_chapter_list()
 
     def __get_chapter_list(self):
-        print 'connect to server...'
+        print 'connect to %s...' % self.__url
         self.__browser.get(self.__url)
 
-        print 'start parsing...'
+        print 'start parsing %s...' % self.__url
         self.__commic_title = self.__browser.find_elements_by_css_selector(
             '.title h1')[0].text
         chapter_elem_list = self.__browser.find_elements_by_css_selector(
@@ -40,16 +40,18 @@ class comic_dragger:
             raise Exception('illegal index position')
 
     def __download_chapter(self, chapter_idx, save_folders=None):
+        bad_chars = "\\/:*?\"<>|"
+        rgx = re.compile('[%s]' % bad_chars)
+
         chapter = self.__chapter_list[chapter_idx]
         chapter_title = chapter[0]
         chapter_url = chapter[1]
         save_folders = osp.join(
-            self.__save_floder, save_folders, chapter_title)
+            self.__save_floder, rgx.sub(' ', save_folders.encode('utf - 8')).decode('utf-8'), rgx.sub(' ', chapter_title.encode('utf - 8')).decode('utf-8'))
+        print('dragging %s...' % chapter_title.encode('utf - 8'))
 
         logging.info('#### START DOWNLOAD CHAPTER %d %s ####' %
                      (chapter_idx, chapter_title))
-
-        print save_folders
 
         if not osp.exists(save_folders):
             os.makedirs(save_folders)
@@ -81,7 +83,7 @@ class comic_dragger:
                     fp.write(content)
                 break
             except Exception, et:
-                ogging.error(et, exc_info=True)
+                logging.error(et, exc_info=True)
                 try_time -= 1
                 if try_time == 0:
                     logging.error('cannot download: %s to %s' %

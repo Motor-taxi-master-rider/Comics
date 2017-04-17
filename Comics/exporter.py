@@ -1,9 +1,9 @@
 # coding=utf-8
 
-from scrapy.contrib.exporter import JsonItemExporter
+from scrapy.exporters import CsvItemExporter
 
 
-class ComicsExporter(JsonItemExporter):
+class ComicsExporter(CsvItemExporter):
     def serialize_field(self, field, name, value):
         switcher = {
             'url': value,

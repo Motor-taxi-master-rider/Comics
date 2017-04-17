@@ -1,6 +1,6 @@
 #custom
-Comic_dragger/download/
-comics_output.json
+download/
+comics_output.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
