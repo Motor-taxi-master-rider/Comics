@@ -4,6 +4,8 @@ from exceptions import Exception
 
 
 def run_sracpy():
+    from Comic_dragger import Comic_dragger_starter
+    from Comics import spiders
     from scrapy.crawler import CrawlerProcess
     from scrapy.utils.project import get_project_settings
 
@@ -40,8 +42,8 @@ def read_parms(*params):
                        help='View a list of index')
     group.add_argument('--name', '-n', action='store', dest="name",
                        help='Search a comic name')
-    view_parser.add_argument('--level', '-l',  choices=('-r', '-d'), default='-r', dest="level",
-                             help='Detail level: -r for roughly(default); -d for detailed')
+    view_parser.add_argument('--level', '-l',  choices=('r', 'd'), default='r', dest="level",
+                             help='Detail level: r for roughly(default); d for detailed')
 
     # drag
     delete_parser = subparsers.add_parser(
@@ -95,34 +97,44 @@ def main(params):
             run_sracpy()
 
     def view_command(p):
-        print(p.v_index)
-        print(p.name)
-        print(p.level)
+        df = read_df()
         index = p.v_index
         name = p.name
         level = p.level
         if index:
-            if level == '-d':
-                pass
-            elif level == '-r':
-                pass
+            if level == 'd':
+                print(df.ix[index])
+            elif level == 'r':
+                print(df.ix[index][['name','classification','author']])
             else:
-                print('Unknow Level')
+                print('Unknown Level')
         elif name:
-            if level == '-d':
+            if level == 'd':
                 pass
-            elif level == '-r':
+            elif level == 'r':
                 pass
             else:
-                print('Unknow Level')
+                print('Unknown Level')
         else:
-            raise Exception
+            print(df)
+
+    class test:
+        import time
+        def __init__(self,int):
+            self.abc=int
+        def start(self):
+            print(start)
+            time.sleep(5)
+            print(self.abc)
 
     def drag_command(p):
         print(p.d_index)
         index = p.d_index
         if index:
-            pass
+            df = read_df()
+            for item in set(index):
+                 #Comic_dragger_starter(df.ix[item]['url']).start_dragger()
+                 test(item).start()
         else:
             raise Exception
 
@@ -135,7 +147,7 @@ def main(params):
     try:
         switcher.get(command, None)(params)
     except Exception:
-        print(Exception)
+        pass
 
 
 if __name__ == '__main__':

@@ -14,6 +14,7 @@ from config import db_config
 
 import pymysql
 
+code='utf-8'
 
 class ComicsPipeline(object):
     def __init__(self):
@@ -40,7 +41,7 @@ class ComicsPipeline(object):
 
         print('Writing %s_output.json' % spider.name)
         self.files[spider] = file
-        self.exporter = ComicsExporter(file, encoding='utf-8')
+        self.exporter = ComicsExporter(file, encoding=code)
         self.exporter.start_exporting()
 
     def spider_closed(self, spider):
