@@ -8,7 +8,9 @@ import urllib2
 
 
 class comic_dragger:
+
     def __init__(self, url, start=0, end=-1, save_floder=".\download"):
+        self.code = "utf-8"
         self.__url = url
         self.__start = start
         self.__end = end
@@ -16,15 +18,13 @@ class comic_dragger:
         self.__commic_title = 'undefined'
         self.__chapter_list = []
         self.__browser = webdriver.PhantomJS()
-
-        self.__browser = webdriver.PhantomJS()
         self.__get_chapter_list()
 
     def __get_chapter_list(self):
         print 'connect to %s...' % self.__url
         self.__browser.get(self.__url)
 
-        print 'start parsing %s...' % self.__url
+        print 'start parsing %s...\n' % self.__url
         self.__commic_title = self.__browser.find_elements_by_css_selector(
             '.title h1')[0].text
         chapter_elem_list = self.__browser.find_elements_by_css_selector(
@@ -47,8 +47,8 @@ class comic_dragger:
         chapter_title = chapter[0]
         chapter_url = chapter[1]
         save_folders = osp.join(
-            self.__save_floder, rgx.sub(' ', save_folders.encode('utf - 8')).decode('utf-8'), rgx.sub(' ', chapter_title.encode('utf - 8')).decode('utf-8'))
-        print('dragging %s...' % chapter_title)
+            self.__save_floder, rgx.sub(' ', save_folders.encode(self.code)).decode(self.code), rgx.sub(' ', chapter_title.encode(self.code)).decode(self.code))
+        print('dragging %s...' % chapter_title.encode(self.code))
 
         logging.info('#### START DOWNLOAD CHAPTER %d %s ####' %
                      (chapter_idx, chapter_title))
@@ -62,7 +62,7 @@ class comic_dragger:
         while True:
             image_url = self.__browser.find_element_by_css_selector(
                 '#qTcms_pic').get_attribute('src')
-            if image_url =='http://www.tazhe.com/static/images/nopic.jpg':
+            if image_url == 'http://www.tazhe.com/static/images/nopic.jpg':
                 continue
             save_image_name = osp.join(
                 save_folders,  str(index) + '.' + osp.basename(image_url).split('.')[-1])

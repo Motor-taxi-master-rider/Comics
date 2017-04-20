@@ -99,14 +99,18 @@ def main(params):
             print(self.abc)
 
     def drag_command(p):
-        print(p.d_index)
+        import threading
         index = p.d_index
+
+        def worker(url):
+            dragger = Comic_dragger_starter(url)
+            dragger.start_dragger()
+
         if index:
             df = read_df()
             for item in set(index):
-                # Comic_dragger_starter(df.ix[item]['url']).start_dragger()
-                test(item).start()
-            time.sleep(5)
+                t = threading.Thread(target=worker, args=(df.ix[item]['url'],))
+                t.start()
         else:
             raise Exception
 
