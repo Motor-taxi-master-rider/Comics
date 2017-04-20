@@ -48,7 +48,10 @@ class comic_dragger:
         chapter_url = chapter[1]
         save_folders = osp.join(
             self.__save_floder, rgx.sub(' ', save_folders.encode(self.code)).decode(self.code), rgx.sub(' ', chapter_title.encode(self.code)).decode(self.code))
-        print('dragging %s...' % chapter_title.encode(self.code))
+        # print('dragging %s...' %
+        # chapter_title.encode(self.code))print('dragging %s...' %
+        # chapter_title.encode(self.code))
+        print('dragging %s - %s...' % (self.__commic_title, chapter_title))
 
         logging.info('#### START DOWNLOAD CHAPTER %d %s ####' %
                      (chapter_idx, chapter_title))
@@ -59,10 +62,12 @@ class comic_dragger:
         self.__browser.get(chapter_url)
 
         index = 1
-        while True:
+        miscatch = 0
+        while True and miscatch <=3:
             image_url = self.__browser.find_element_by_css_selector(
                 '#qTcms_pic').get_attribute('src')
             if image_url == 'http://www.tazhe.com/static/images/nopic.jpg':
+                miscatch += 1
                 continue
             save_image_name = osp.join(
                 save_folders,  str(index) + '.' + osp.basename(image_url).split('.')[-1])
