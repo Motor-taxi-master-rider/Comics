@@ -51,37 +51,6 @@ def read_parms(*params):
     delete_parser.add_argument('--index', '-i', type=int,
                                nargs='+', dest="d_index", help='Drag a list of index')
     main(parser.parse_args())
-# def main(*script):
-#     def is_number(s):
-#         try:
-#             int(s)
-#             return True
-#         except ValueError:
-#             pass
-#
-#         try:
-#             import unicodedata
-#             unicodedata.numeric(s)
-#             return True
-#         except (TypeError, ValueError):
-#             pass
-#         return False
-#     if(len(script) > 1):
-#         if script[1] == '-s':
-#             run_sracpy()
-#         elif script[1] == '-v':
-#             print(read_df())
-#         elif is_number(script[1]):
-#             df = read_df()
-#             cds = Comic_dragger_starter(df.ix[int(script[1])]['url'])
-#             cds.start_dragger()
-#         else:
-#             print('unknow command')
-#     else:
-#         print('Help:')
-#         print('-v   view data source')
-#         print('-s   re scrapy data')
-#         print('-[number]   retrive item of index')
 
 
 def main(params):
@@ -105,7 +74,7 @@ def main(params):
             if level == 'd':
                 print(df.ix[index])
             elif level == 'r':
-                print(df.ix[index][['name','classification','author']])
+                print(df.ix[index][['name', 'classification', 'author']])
             else:
                 print('Unknown Level')
         elif name:
@@ -120,11 +89,13 @@ def main(params):
 
     class test:
         import time
-        def __init__(self,int):
-            self.abc=int
+
+        def __init__(self, int):
+            self.abc = int
+
         def start(self):
-            print(start)
-            time.sleep(5)
+            print('start')
+            time.sleep(1)
             print(self.abc)
 
     def drag_command(p):
@@ -133,8 +104,9 @@ def main(params):
         if index:
             df = read_df()
             for item in set(index):
-                 #Comic_dragger_starter(df.ix[item]['url']).start_dragger()
-                 test(item).start()
+                # Comic_dragger_starter(df.ix[item]['url']).start_dragger()
+                test(item).start()
+            time.sleep(5)
         else:
             raise Exception
 
