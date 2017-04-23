@@ -10,6 +10,8 @@ from scrapy.item import Field
 
 
 class ComicsItem(scrapy.Item):
+    '''Define fields for comics spiders
+    '''
     # define the fields for your item here like:
     # name = scrapy.Field()
     name = Field()

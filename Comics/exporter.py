@@ -5,7 +5,13 @@ from scrapy.exporters import CsvItemExporter
 code='utf-8'
 
 class ComicsExporter(CsvItemExporter):
+    '''scrapy exporter for output csv file.
+    '''
     def serialize_field(self, field, name, value):
+        '''overwtire function of CsvItemExporter
+
+        define format of output fields
+        '''
         switcher = {
             'url': value,
             'introduction': value[0].encode(code).strip() if value else None,

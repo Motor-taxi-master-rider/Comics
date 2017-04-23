@@ -8,6 +8,15 @@ import urllib2
 
 
 class comic_dragger:
+    '''
+    url: str url to crawl
+
+    start: int start index
+
+    end: int end index
+
+    save_floder: str floder name to store comics pictures
+    '''
 
     def __init__(self, url, start=0, end=-1, save_floder=".\download"):
         self.code = "utf-8"
@@ -18,9 +27,11 @@ class comic_dragger:
         self.__commic_title = 'undefined'
         self.__chapter_list = []
         self.__browser = webdriver.PhantomJS()
-        self.__get_chapter_list()
+        self.get_chapter_list()
 
-    def __get_chapter_list(self):
+    def get_chapter_list(self):
+        '''connect to comics url and get url list of each chapter.
+        '''
         print 'connect to %s...' % self.__url
         self.__browser.get(self.__url)
 
@@ -39,7 +50,12 @@ class comic_dragger:
         if self.__start >= len(self.__chapter_list) or (0 <= self.__end < self.__start):
             raise Exception('illegal index position')
 
-    def __download_chapter(self, chapter_idx, save_folders=None):
+    def download_chapter(self, chapter_idx, save_folders=None):
+        '''Traversal all page of selected chapter and download image.
+
+
+
+        '''
         bad_chars = "\\/:*?\"<>|"
         rgx = re.compile('[%s]' % bad_chars)
 
@@ -49,7 +65,6 @@ class comic_dragger:
         save_folders = osp.join(
             self.__save_floder, rgx.sub(' ', save_folders.encode(self.code)).decode(self.code), rgx.sub(' ', chapter_title.encode(self.code)).decode(self.code))
         # print('dragging %s...' %
-        # chapter_title.encode(self.code))print('dragging %s...' %
         # chapter_title.encode(self.code))
         print('dragging %s - %s...' % (self.__commic_title, chapter_title))
 
@@ -66,14 +81,16 @@ class comic_dragger:
         while True and miscatch <=3:
             image_url = self.__browser.find_element_by_css_selector(
                 '#qTcms_pic').get_attribute('src')
+            #if uncaught image, add count
             if image_url == 'http://www.tazhe.com/static/images/nopic.jpg':
                 miscatch += 1
                 continue
             save_image_name = osp.join(
                 save_folders,  str(index) + '.' + osp.basename(image_url).split('.')[-1])
-            self.__download(image_url, save_image_name)
+            self.download(image_url, save_image_name)
 
             self.__browser.find_element_by_css_selector('a.next').click()
+            #stop dragging
             try:
                 self.__browser.find_element_by_css_selector('#bgDiv')
                 break
@@ -82,7 +99,15 @@ class comic_dragger:
                 pass
 
     @staticmethod
-    def __download(url, save_path, try_time=3, timeout=30):
+    def download(url, save_path, try_time=3, timeout=30):
+        '''download comic picture of a page
+
+        url: str image url
+
+        try_time: int max try time
+
+        timeout: int name to store comics pictures
+        '''
         while try_time > 0:
             try:
                 content = urllib2.urlopen(url, timeout=timeout).read()
@@ -97,8 +122,10 @@ class comic_dragger:
                                   (url, save_path))
 
     def start(self):
+        '''start dragging
+        '''
         start = self.__start if self.__start >= 0 else 0
         end = self.__end if self.__end >= 0 else len(self.__chapter_list)
 
         for chapter_idx in xrange(start, end):
-            self.__download_chapter(chapter_idx, self.__commic_title)
+            self.download_chapter(chapter_idx, self.__commic_title)

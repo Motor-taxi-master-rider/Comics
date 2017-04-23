@@ -7,6 +7,10 @@ from Comics.items import ComicsItem
 
 
 class Comics(CrawlSpider):
+    ''''scrapy spider.
+
+    inherit from CrawlSpider.
+    '''
 
     name = "comics"
     allowed_domains = ["www.tazhe.com"]
@@ -20,6 +24,8 @@ class Comics(CrawlSpider):
         super(Comics, self).__init__(*args, **kwargs)
 
     def parse_item(self, response):
+        '''rewrite class method.
+        '''
         #from scrapy.shell import inspect_response
         #inspect_response(response, self)
         sel = response.selector
